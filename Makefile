@@ -382,7 +382,7 @@ define MAKE_IMG
 $(BUILD_DIR) :
 	$$(Q)mkdir -p "$$@"
 
-$(ELF) : $(OBJS) $(LINKERFILE)
+$(ELF) : $(BUILD_DIR) $(OBJS) $(LINKERFILE)
 	@echo "  LD      $$@"
 	@echo 'const char build_message[] = "Built : "__TIME__", "__DATE__; \
                const char version_string[] = "${VERSION_STRING}";' | \
@@ -402,7 +402,7 @@ $(BIN) : $(ELF)
 	@echo
 
 .PHONY : $(1)
-$(1) : $(BUILD_DIR) $(BIN) $(DUMP)
+$(1) : $(BIN) $(DUMP)
 
 all : $(1)
 
@@ -414,6 +414,10 @@ $(AUTOGEN_DIR):
 $(AUTOGEN_DIR)/tests_list.c $(AUTOGEN_DIR)/tests_list.h: $(AUTOGEN_DIR) ${TESTS_FILE} ${PLAT_TESTS_SKIP_LIST}
 	@echo "  AUTOGEN $@"
 	tools/generate_test_list/generate_test_list.pl $(AUTOGEN_DIR)/tests_list.c $(AUTOGEN_DIR)/tests_list.h  ${TESTS_FILE} $(PLAT_TESTS_SKIP_LIST)
+
+$(TFTF_SOURCES): $(AUTOGEN_DIR)/tests_list.h
+$(NS_BL1U_SOURCES): $(AUTOGEN_DIR)/tests_list.h
+$(NS_BL2U_SOURCES): $(AUTOGEN_DIR)/tests_list.h
 
 $(eval $(call MAKE_IMG,tftf))
 
