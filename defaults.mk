@@ -24,7 +24,7 @@ BASE_COMMIT		:= origin/master
 DEBUG			:= 0
 
 # Build platform
-DEFAULT_PLAT		:= fvp
+PLAT			:= fvp
 
 # Whether the Firmware Update images (i.e. NS_BL1U and NS_BL2U images) should be
 # built. The platform makefile is free to override this value.

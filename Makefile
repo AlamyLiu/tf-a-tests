@@ -14,8 +14,6 @@ VERSION_MINOR		:= 0
 
 include defaults.mk
 
-PLAT			:= ${DEFAULT_PLAT}
-
 # Assertions enabled for DEBUG builds by default
 ENABLE_ASSERTIONS	:= ${DEBUG}
 
@@ -453,7 +451,7 @@ help:
 	@echo "usage: ${MAKE} PLAT=<${PLATFORMS}> <all|tftf|ns_bl1u|ns_bl2u|cactus|ivy|el3_payload|distclean|clean|checkcodebase|checkpatch>"
 	@echo ""
 	@echo "PLAT is used to specify which platform you wish to build."
-	@echo "If no platform is specified, PLAT defaults to: ${DEFAULT_PLAT}"
+	@echo "If no platform is specified, PLAT defaults to: ${PLAT}"
 	@echo ""
 	@echo "Supported Targets:"
 	@echo "  all            Build all supported binaries for this platform"
