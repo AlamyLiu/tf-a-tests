@@ -99,6 +99,10 @@ ifeq ($(wildcard ${PLAT_MAKEFILE_FULL}),)
   $(error "Error: Invalid platform. The following platforms are available: ${PLATFORMS}")
 endif
 
+# `make` builds the first target if no targets are given
+# Define 'all' before including other .mk files so it could be the default
+# in case any target is defined in other .mk files.
+# all: msg_start tftf ns_bl1u ns_bl2u cactus ivy
 .PHONY: all
 all: msg_start
 
