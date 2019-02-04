@@ -17,6 +17,16 @@
 #
 #
 
+
+################################################################################
+# Makefile options & variables
+################################################################################
+# Make sure MAKECMDGOALS is defined, so the order of targets does not matter
+ifndef MAKECMDGOALS
+	MAKECMDGOALS = all
+endif
+
+
 # TFTF Version
 VERSION_MAJOR		:= 2
 VERSION_MINOR		:= 0
