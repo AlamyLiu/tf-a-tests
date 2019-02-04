@@ -347,6 +347,7 @@ $(eval DEP := $(patsubst %.o,%.d,$(OBJ)))
 
 $(OBJ) : $(2)
 	@echo "  CC      $$<"
+	@echo $$(Q)$$(CC) $$($(3)_CFLAGS) ${$(3)_INCLUDES} ${$(3)_DEFINES} -DIMAGE_$(3) $(MAKE_DEP) -c $$< -o $$@
 	$$(Q)$$(CC) $$($(3)_CFLAGS) ${$(3)_INCLUDES} ${$(3)_DEFINES} -DIMAGE_$(3) $(MAKE_DEP) -c $$< -o $$@
 
 -include $(DEP)
