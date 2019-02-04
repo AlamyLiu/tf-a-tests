@@ -42,3 +42,7 @@ USE_NVM			:= 0
 
 # Build verbosity
 V			:= 0
+
+# Cross compilere
+CROSS_COMPILE := aarch64-linux-gnu-
+export CROSS_COMPILE

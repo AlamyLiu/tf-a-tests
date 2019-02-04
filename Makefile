@@ -99,12 +99,21 @@ ifeq ($(wildcard ${PLAT_MAKEFILE_FULL}),)
   $(error "Error: Invalid platform. The following platforms are available: ${PLATFORMS}")
 endif
 
+
 # `make` builds the first target if no targets are given
 # Define 'all' before including other .mk files so it could be the default
 # in case any target is defined in other .mk files.
 # all: msg_start tftf ns_bl1u ns_bl2u cactus ivy
 .PHONY: all
-all: msg_start
+all: check_define msg_start
+
+.PHONY: check_define
+check_define:
+ifndef CROSS_COMPILE
+ifeq ($(filter $(MAKECMDGOALS), clean distclean realclean),)
+	$(warning "Cross compiler not defined. You probably want to define CROSS_COMPILE")
+endif
+endif
 
 .PHONY: msg_start
 msg_start:
@@ -198,6 +207,10 @@ OC			:=	${CROSS_COMPILE}objcopy
 OD			:=	${CROSS_COMPILE}objdump
 NM			:=	${CROSS_COMPILE}nm
 PP			:=	${CROSS_COMPILE}gcc
+
+ifeq ($(shell which ${CC}),)
+  $(error "Error: Cross compiler not found: ${CC}")
+endif
 
 ################################################################################
 
@@ -476,4 +489,4 @@ help:
 	@echo "note: most build targets require PLAT to be set to a specific platform."
 	@echo ""
 	@echo "example: build all targets for the FVP platform:"
-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+	@echo "  CROSS_COMPILE=aarch64-linux-gnu- make PLAT=fvp all"
