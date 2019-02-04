@@ -4,6 +4,19 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
+#
+# Targets
+#	all, tftf, ns_bl1u, ns_bl2u, cactus, ivy, el3_payload
+#	checkcodebase, locate-checkpatch / checkpatch
+#	clean, realclean / distclean
+#	cscope
+#	help
+#
+#
+#
+#
+#
+
 # TFTF Version
 VERSION_MAJOR		:= 2
 VERSION_MINOR		:= 0
