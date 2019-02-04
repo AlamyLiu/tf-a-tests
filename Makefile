@@ -26,7 +26,6 @@ ifndef MAKECMDGOALS
 	MAKECMDGOALS = all
 endif
 
-
 # TFTF Version
 VERSION_MAJOR		:= 2
 VERSION_MINOR		:= 0
@@ -129,6 +128,8 @@ endif
 # all: msg_start tftf ns_bl1u ns_bl2u cactus ivy
 .PHONY: all
 all: check_define msg_start
+
+# all: check_define msg_start tftf ns_bl1u ns_bl2u
 
 .PHONY: check_define
 check_define:
@@ -347,6 +348,7 @@ $(eval DEP := $(patsubst %.o,%.d,$(OBJ)))
 
 $(OBJ) : $(2)
 	@echo "  CC      $$<"
+	@echo $$(Q)$$(CC) $$($(3)_CFLAGS) ${$(3)_INCLUDES} ${$(3)_DEFINES} -DIMAGE_$(3) $(MAKE_DEP) -c $$< -o $$@
 	$$(Q)$$(CC) $$($(3)_CFLAGS) ${$(3)_INCLUDES} ${$(3)_DEFINES} -DIMAGE_$(3) $(MAKE_DEP) -c $$< -o $$@
 
 -include $(DEP)
@@ -457,11 +459,17 @@ $(TFTF_SOURCES): $(AUTOGEN_DIR)/tests_list.h
 $(NS_BL1U_SOURCES): $(AUTOGEN_DIR)/tests_list.h
 $(NS_BL2U_SOURCES): $(AUTOGEN_DIR)/tests_list.h
 
-$(eval $(call MAKE_IMG,tftf))
+#.PHONY: tftf ns_bl1u ns_bl2u
+#tftf:
+#	$(eval $(call MAKE_IMG, $@))
 
+$(eval $(call MAKE_IMG, tftf))
+
+#ns_bl1u ns_bl2u:
 ifeq ($(FIRMWARE_UPDATE), 1)
-  $(eval $(call MAKE_IMG,ns_bl1u))
-  $(eval $(call MAKE_IMG,ns_bl2u))
+  $(eval $(call MAKE_IMG, ns_bl1u))
+  $(eval $(call MAKE_IMG, ns_bl2u))
+# $(eval $(call MAKE_IMG, $@))
 endif
 
 ifeq (${ARCH}-${PLAT},aarch64-fvp)
